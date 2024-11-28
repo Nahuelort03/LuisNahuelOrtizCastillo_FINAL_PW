@@ -1,0 +1,70 @@
+document.getElementById('load-dog').addEventListener('click', async () => {
+    const dogContainer = document.getElementById('dog-container');
+    dogContainer.innerHTML = '<p>Cargando...</p>';
+
+    try {
+        
+        const response = await fetch('https://api.thedogapi.com/v1/images/BkIEhN3pG');
+        const data = await response.json();
+
+        
+        const dogImage = document.createElement('img');
+        dogImage.src = data[0].url;
+        dogImage.alt = 'MUESTRA PERROS';
+
+        dogContainer.innerHTML = '';
+        dogContainer.appendChild(dogImage);
+    } catch (error) {
+        dogContainer.innerHTML = '<p>Error al cargar la imagen.</p>';
+        console.error(error);
+    }
+});
+
+emailjs.init("PUBLIC KEY"); 
+
+document.getElementById('personalDataForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+
+  emailjs.send("NOMBRE DE SERVICIO", "NOMBRE DE PLANTILLA", {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phone: phone,
+    address: address
+  })
+  
+  .then(() => {
+    document.getElementById('status-message').innerText = "Datos enviados con éxito.";
+    document.getElementById('personalDataForm').reset();
+  })
+  .catch((error) => {
+    console.error("Error al enviar los datos:", error);
+    document.getElementById('status-message').innerText = "Hubo un error al enviar los datos.";
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("empleadoForm");
+
+    form.addEventListener("submit", function(event) {
+        alert("El formulario ha sido enviado.");
+    });
+});
+
+function calcularSalario() {
+    alert("Ingrese el salario y el descuento para calcular el total.");
+}
+
+function calcularTotalPuntos() {
+    alert("Ingrese 3 puntajes para calcular el total.");
+}
+
+function calcularPorcentaje() {
+    alert("Ingrese un puntaje para calcular el 15% del puntaje.");
+}
